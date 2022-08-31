@@ -13,5 +13,5 @@ You can manage all your past Items from your Items Library, such as update items
 Frameworks:
 
 Frontend in React/JS
-Styling in Bootstrap: https://getbootstrap.com/ (icons used in wireframe sourced from Bootstrap)
+Styling in Bootstrap: https://getbootstrap.com/ 
 Backend in Django/PY
