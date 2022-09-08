@@ -1,0 +1,74 @@
+[
+    {
+        "model": "auth.user",
+        "pk": 1,
+        "fields": {
+            "password": "pbkdf2_sha256$216000$qMRH8szID7Z8$Vljya2V3XfruOHuvx1hGz9ZyKg4bxbw7rc2WO0gTR7I=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "IsobelProphet",
+            "first_name": "Isobel",
+            "last_name": "Prophet",
+            "email": "me@me.com",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2020-08-28T14:51:39.989Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 2,
+        "fields": {
+            "password": "qMRH8szID7Z8$Vljya2V3Xfpbkdf2_sha256$216000$ruOHuvx1hGz9ZyKg4bxbw7rc2WO0gTR7I=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "AliceMalice",
+            "first_name": "Alice",
+            "last_name": "Malice",
+            "email": "alice@malice.com",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2022-01-28T14:51:39.989Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 3,
+        "fields": {
+            "password": "uOHuvx1hGz9ZyKg4bxbw7rc2WO0gTpbkdf2_sha256$216000$qMRH8szID7Z8$Vljya2V3XfrR7I=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "essiemae",
+            "first_name": "Essie",
+            "last_name": "Mae",
+            "email": "essie@mae.com",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2020-09-28T14:51:39.989Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 4,
+        "fields": {
+            "password": "sha256$216000$qMRH8szIpbkdf2_D7Z8$Vljya2V3XfruOHuvx1hGz9ZyKg4bxbw7rc2WO0gTR7I=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "frankbaltic",
+            "first_name": "Frank",
+            "last_name": "Baltic",
+            "email": "frank@baltic.com",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2021-04-28T14:51:39.989Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    }
+]

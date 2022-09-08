@@ -1,0 +1,82 @@
+[
+    {
+        "model": "packetapi.item",
+        "pk": 1,
+        "fields": {
+            "user": 1,
+            "item_name": "Red Velvet Dress",
+            "lists": [1,3],
+            "created_on": "2022-8-23"
+        }
+    },
+    {
+        "model": "packetapi.item",
+        "pk": 2,
+        "fields": {
+            "user": 1,
+            "item_name": "Black strappy heels",
+            "lists": 1,
+            "created_on": "2022-8-23"
+        }
+    },
+    {
+        "model": "packetapi.item",
+        "pk": 3,
+        "fields": {
+            "user": 1,
+            "item_name": "Toothbrush & Toothpaste",
+            "lists": [1,2],
+            "created_on": "2022-8-23"
+        }
+    },
+    {
+        "model": "packetapi.item",
+        "pk": 4,
+        "fields": {
+            "user": 1,
+            "item_name": "Heating Pad",
+            "lists": 1,
+            "created_on": "2022-8-23"
+        }
+    },
+    {
+        "model": "packetapi.item",
+        "pk": 5,
+        "fields": {
+            "user": 1,
+            "item_name": "Emerald Tailored Trousers",
+            "lists": [1,2],
+            "created_on": "2022-8-23"
+        }
+    },
+    {
+        "model": "packetapi.item",
+        "pk": 1,
+        "fields": {
+            "user": 1,
+            "item_name": "White Block Heel Mule",
+            "lists": 1,
+            "created_on": "2022-8-23"
+        }
+    },
+    {
+        "model": "packetapi.item",
+        "pk": 6,
+        "fields": {
+            "user": 1,
+            "item_name": "Cylindrical Hair Dryer",
+            "lists": 1,
+            "created_on": "2022-8-23"
+        }
+    },
+    {
+        "model": "packetapi.item",
+        "pk": 7,
+        "fields": {
+            "user": 1,
+            "item_name": "Makeup Remover Balm",
+            "lists": 1,
+            "created_on": "2022-8-23"
+        }
+    }
+]
