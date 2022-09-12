@@ -1,13 +1,12 @@
 from django.db import models
 
+from packetapi.models.list import PacketList
+from packetapi.models.user import PacketUser
+
 
 class PacketItem(models.Model):
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
-    email = models.CharField(max_length=50)
-    username = models.CharField(max_length=50)
-    password = models.CharField(max_length=50)
-    
-    ## To be refined
+    userId = models.ForeignKey(PacketUser, on_delete=models.CASCADE)
+    item_name = models.CharField(max_length=150)
+    lists = models.ForeignKey(PacketList, on_delete=models.CASCADE)
+    created_on = models.DateTimeField

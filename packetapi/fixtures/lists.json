@@ -1,0 +1,47 @@
+[
+    {
+        "model": "packetapi.packetlist",
+        "pk": 1,
+        "fields": {
+            "userId": 1,
+            "list_name": "Wedding in Santa Barbara",
+            "created_on": "2022-8-23"
+        }
+    },
+    {
+        "model": "packetapi.packetlist",
+        "pk": 2,
+        "fields": {
+            "userId": 2,
+            "list_name": "Trip to Ibiza",
+            "created_on": "2022-8-23"
+        }
+    },
+    {
+        "model": "packetapi.packetlist",
+        "pk": 3,
+        "fields": {
+            "userId": 3,
+            "list_name": "Vacay to Carolinas",
+            "created_on": "2022-8-23"
+        }
+    },
+    {
+        "model": "packetapi.packetlist",
+        "pk": 4,
+        "fields": {
+            "userId": 4,
+            "list_name": "Staycation in LA",
+            "created_on": "2022-8-23"
+        }
+    },
+    {
+        "model": "packetapi.packetlist",
+        "pk": 5,
+        "fields": {
+            "userId": 5,
+            "list_name": "Bachelorette Weekend in Nashville",
+            "created_on": "2022-8-23"
+        }
+    }
+]

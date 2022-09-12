@@ -1,0 +1,34 @@
+[
+    {
+        "model": "packetapi.packetuser",
+        "pk": 1,
+        "fields": {
+            "user": 1,
+            "bio": "Hi my name is Isobel, I love to travel"
+        }
+    },
+    {
+        "model": "packetapi.packetuser",
+        "pk": 2,
+        "fields": {
+            "user": 2,
+            "bio": "My name is Alice, I love organizing"
+        }
+    },
+    {
+        "model": "packetapi.packetuser",
+        "pk": 3,
+        "fields": {
+            "user": 3,
+            "bio": "I'm Essie, I'm 23, I travel and I pack"
+        }
+    },
+    {
+        "model": "packetapi.packetuser",
+        "pk": 4,
+        "fields": {
+            "user": 4,
+            "bio": "Hi my name is Frank Baltic, like the ocean"
+        }
+    }
+]
