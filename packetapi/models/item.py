@@ -8,5 +8,5 @@ class PacketItem(models.Model):
 
     userId = models.ForeignKey(PacketUser, on_delete=models.CASCADE)
     item_name = models.CharField(max_length=150)
-    lists = models.ForeignKey(PacketList, on_delete=models.CASCADE)
-    created_on = models.DateTimeField
+    lists = models.ManyToManyField(PacketList, related_name="items")
+    created_on = models.DateTimeField()
