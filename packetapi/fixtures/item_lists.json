@@ -1,0 +1,18 @@
+[
+{
+    "model": "packetapi.packetitem_lists",
+    "pk": 1,
+    "fields": {
+        "packetitem_id": 1,
+        "packetlist_id": 1
+    }
+},
+{
+    "model": "packetapi.packetitem_lists",
+    "pk": 2,
+    "fields": {
+        "packetitem_id": 1,
+        "packetlist_id": 3
+    }
+}
+]

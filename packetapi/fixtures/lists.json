@@ -5,7 +5,7 @@
         "fields": {
             "userId": 1,
             "list_name": "Wedding in Santa Barbara",
-            "created_on": "2022-8-23"
+            "created_on": "2020-08-28T14:51:39.989Z"
         }
     },
     {
@@ -14,7 +14,7 @@
         "fields": {
             "userId": 2,
             "list_name": "Trip to Ibiza",
-            "created_on": "2022-8-23"
+            "created_on": "2020-08-28T14:51:39.989Z"
         }
     },
     {
@@ -23,7 +23,7 @@
         "fields": {
             "userId": 3,
             "list_name": "Vacay to Carolinas",
-            "created_on": "2022-8-23"
+            "created_on": "2020-08-28T14:51:39.989Z"
         }
     },
     {
@@ -32,16 +32,16 @@
         "fields": {
             "userId": 4,
             "list_name": "Staycation in LA",
-            "created_on": "2022-8-23"
+            "created_on": "2020-08-28T14:51:39.989Z"
         }
     },
     {
         "model": "packetapi.packetlist",
         "pk": 5,
         "fields": {
-            "userId": 5,
+            "userId": 4,
             "list_name": "Bachelorette Weekend in Nashville",
-            "created_on": "2022-8-23"
+            "created_on": "2020-08-28T14:51:39.989Z"
         }
     }
 ]
