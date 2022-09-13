@@ -3,6 +3,8 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers, status
 
+import datetime
+
 from packetapi.models.item import PacketItem
 from packetapi.models.list import PacketList
 from packetapi.models.user import PacketUser
@@ -37,12 +39,12 @@ class ItemView(ViewSet):
         """
         userId = PacketUser.objects.get(user=request.auth.user)
         lists = PacketList.objects.get(pk=request.data["lists"])
+        # created_on = datetime(auto_now_add = True)
 
         item = PacketItem.objects.create(
             userId=userId,
             item_name=request.data["item_name"],
-            lists=lists,
-            created_on=True #Not sure if correct syntax
+            lists=lists
         )
         serializer = ItemSerializer(item)
         return Response(serializer.data)    
