@@ -7,10 +7,6 @@ from rest_framework import serializers, status
 from packetapi.models.list import PacketList
 from packetapi.models.user import PacketUser
 
-# GET works, POST still sending 500 error in Postman - 
-#   File "/Users/turnerlynch/workspace/packet-app/packetapi/views/list.py", line 36, in create
-#       list_name = request.data["list_name"],
-#       TypeError: list indices must be integers or slices, not str
 
 class ListView(ViewSet):
     """List view"""

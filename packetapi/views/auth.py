@@ -55,7 +55,7 @@ def register_user(request):
         password=request.data['password'],
         first_name=request.data['first_name'],
         last_name=request.data['last_name'],
-        email=request.data['email']
+        # email=request.data['email']
     )
 
     # Now save the extra info in the packetapi_packet_user table
