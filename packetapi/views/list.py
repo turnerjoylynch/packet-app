@@ -3,6 +3,7 @@ from django.http import HttpResponseServerError
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers, status
+from packetapi.models.item import PacketItem
 
 from packetapi.models.list import PacketList
 from packetapi.models.user import PacketUser
@@ -29,6 +30,7 @@ class ListView(ViewSet):
         Returns
             Response -- JSON serialized list instance
         """
+        data = request.data
         userId = PacketUser.objects.get(user=request.auth.user)
         
         list = PacketList.objects.create(
@@ -36,6 +38,11 @@ class ListView(ViewSet):
             list_name = request.data["list_name"],
             created_on = datetime.now()
         )
+        
+        for items in data['items']:
+            items_obj = PacketItem.objects.get(item_name=items['item_name'])
+            list.items.add(items_obj)        
+        
         serializer = CreateListSerializer(list)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     
@@ -48,6 +55,13 @@ class ListView(ViewSet):
         list = PacketList.objects.get(pk=pk)
         list.list_name = request.data["list_name"]
         
+        item = PacketItem.objects.get(pk=pk)
+        # item.name = request.data["item_name"]
+        
+        lists = PacketList.objects.get(pk=request.data["lists"])
+        item.lists = lists
+        
+        item.save()
         list.save()
 
         return Response(None, status=status.HTTP_204_NO_CONTENT)
