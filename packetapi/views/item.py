@@ -56,21 +56,17 @@ class ItemView(ViewSet):
         serializer = CreateItemSerializer(item)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
+    
     def update(self, request, pk):
-        """Handle PUT requests for a post
-
+        """Handle PUT requests for a trip
         Returns:
             Response -- Empty body with 204 status code
         """
-
         item = PacketItem.objects.get(pk=pk)
-        item.name = request.data["item_name"]
-
-        lists = PacketList.objects.get(pk=request.data["lists"])
-        item.lists = lists
-        item.save()
-
-        return Response(None, status=status.HTTP_204_NO_CONTENT)
+        serializer = CreateItemSerializer(item, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(None, status=status.HTTP_204_NO_CONTENT)    
 
     def destroy(self, request, pk):
         item = PacketItem.objects.get(pk=pk)
