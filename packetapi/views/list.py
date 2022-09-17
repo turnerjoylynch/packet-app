@@ -24,41 +24,41 @@ class ListView(ViewSet):
         serializer = ListSerializer(list_view, many=True)
         return Response(serializer.data)
     
-    # def create(self, request):
-    #     """Handle POST operations
-
-    #     Returns
-    #         Response -- JSON serialized list instance
-    #     """
-    #     userId = PacketUser.objects.get(user=request.auth.user)
-        
-    #     list = PacketList.objects.create(
-    #         userId = userId,
-    #         list_name = request.data["list_name"],
-    #         created_on = datetime.now()
-    #     )
-    #     serializer = CreateListSerializer(list)
-    #     return Response(serializer.data, status=status.HTTP_201_CREATED)
-    
-    
     def create(self, request):
-        """Handle POST operations for new trip
+        """Handle POST operations
+
         Returns
-            Response -- JSON serialized trip instance
+            Response -- JSON serialized list instance
         """
-        user = PacketUser.objects.get(user=request.auth.user)
-        items = request.data.get("items")
-        if items: 
-            del request.data["items"]
-        serializer = CreateListSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save(user=user)
-        list = PacketList.objects.get(pk=serializer.data["id"])
-        if items:
-            for id in items:
-                items = PacketItem.objects.get(pk=id)
-                list.items.add(items)
+        userId = PacketUser.objects.get(user=request.auth.user)
+        
+        list = PacketList.objects.create(
+            userId = userId,
+            list_name = request.data["list_name"],
+            created_on = datetime.now()
+        )
+        serializer = CreateListSerializer(list)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+    
+    # def create(self, request):
+    #     """Handle POST operations for new trip
+    #     Returns
+    #         Response -- JSON serialized trip instance
+    #     """
+    #     user = PacketUser.objects.get(user=request.auth.user)
+    #     items = request.data.get("items")
+    #     if items: 
+    #         del request.data["items"]
+    #     serializer = CreateListSerializer(data=request.data)
+    #     serializer.is_valid(raise_exception=True)
+    #     serializer.save(user=user)
+    #     list = PacketList.objects.get(pk=serializer.data["id"])
+    #     if items:
+    #         for id in items:
+    #             items = PacketItem.objects.get(pk=id)
+    #             list.items.add(items)
+    #     return Response(serializer.data, status=status.HTTP_201_CREATED)
     
     
     
