@@ -31,29 +31,47 @@ class ItemView(ViewSet):
         serializer = ItemSerializer(item_view, many=True)
         return Response(serializer.data)
 
+    # def create(self, request):
+    #     """Handle POST operations
+
+    #     Returns
+    #         Response -- JSON serialized Item instance
+    #     """
+    #     data = request.data
+    #     userId = PacketUser.objects.get(user=request.auth.user)
+
+    #     item = PacketItem.objects.create(
+    #         userId=userId,
+    #         item_name=request.data["item_name"],
+    #         created_on=datetime.now(),
+    #     )
+
+    #     item.save()
+
+    #     for lists in data['lists']:
+    #         lists_obj = PacketList.objects.get(list_name=lists['list_name'])
+    #         item.lists.add(lists_obj)
+
+    #     serializer = CreateItemSerializer(item)
+    #     return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
     def create(self, request):
-        """Handle POST operations
-
+        """Handle POST operations for new idea
         Returns
-            Response -- JSON serialized Item instance
+            Response -- JSON serialized idea instance
         """
-        data = request.data
         userId = PacketUser.objects.get(user=request.auth.user)
-        # lists = PacketList.objects.get(pk=request.data["lists"])
-
-        item = PacketItem.objects.create(
-            userId=userId,
-            item_name=request.data["item_name"],
-            created_on=datetime.now(),
-        )
-
-        item.save()
-
-        for lists in data['lists']:
-            lists_obj = PacketList.objects.get(list_name=lists['list_name'])
-            item.lists.add(lists_obj)
-
-        serializer = CreateItemSerializer(item)
+        lists = request.data.get("lists")
+        if lists: 
+            del request.data["lists"]
+        serializer = CreateItemSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(userId=userId)
+        item = PacketItem.objects.get(pk=serializer.data["id"])
+        if lists:
+            for id in lists:
+                lists = PacketList.objects.get(pk=id)
+                item.lists.add(lists)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def update(self, request, pk):
@@ -90,7 +108,7 @@ class CreateItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = PacketItem
         fields = ('id', 'userId', 'item_name', 'lists', 'created_on')
-        depth = 1
+        depth = 2
 
 # class ItemListSerializer(serializers.ModelSerializer):
 #     item = ItemSerializer(many = True,) #To represent the relationship as a string instead of id

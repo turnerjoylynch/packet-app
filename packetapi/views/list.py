@@ -3,6 +3,7 @@ from django.http import HttpResponseServerError
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers, status
+from packetapi.models.item import PacketItem
 
 from packetapi.models.list import PacketList
 from packetapi.models.user import PacketUser
@@ -38,6 +39,28 @@ class ListView(ViewSet):
         )
         serializer = CreateListSerializer(list)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+    
+    # def create(self, request):
+    #     """Handle POST operations for new trip
+    #     Returns
+    #         Response -- JSON serialized trip instance
+    #     """
+    #     user = PacketUser.objects.get(user=request.auth.user)
+    #     items = request.data.get("items")
+    #     if items: 
+    #         del request.data["items"]
+    #     serializer = CreateListSerializer(data=request.data)
+    #     serializer.is_valid(raise_exception=True)
+    #     serializer.save(user=user)
+    #     list = PacketList.objects.get(pk=serializer.data["id"])
+    #     if items:
+    #         for id in items:
+    #             items = PacketItem.objects.get(pk=id)
+    #             list.items.add(items)
+    #     return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+    
     
 
     def update(self, request, pk):
