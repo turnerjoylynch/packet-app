@@ -30,15 +30,37 @@ class ItemView(ViewSet):
         serializer = ItemSerializer(item_view, many=True)
         return Response(serializer.data)
 
+    # def create(self, request):
+    #     """Handle POST operations
+
+    #     Returns
+    #         Response -- JSON serialized Item instance
+    #     """
+    #     data = request.data
+    #     userId = PacketUser.objects.get(user=request.auth.user)
+
+    #     item = PacketItem.objects.create(
+    #         userId=userId,
+    #         item_name=request.data["item_name"],
+    #         created_on=datetime.now(),
+    #     )
+
+    #     item.save()
+
+    #     for lists in data['lists']:
+    #         lists_obj = PacketList.objects.get(list_name=lists['list_name'])
+    #         item.lists.add(lists_obj)
+
+    #     serializer = CreateItemSerializer(item)
+    #     return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
     def create(self, request):
-        """Handle POST operations
-
+        """Handle POST operations for new idea
         Returns
-            Response -- JSON serialized Item instance
+            Response -- JSON serialized idea instance
         """
-        data = request.data
         userId = PacketUser.objects.get(user=request.auth.user)
-
+        
         item = PacketItem.objects.create(
             userId=userId,
             item_name=request.data["item_name"],
@@ -52,23 +74,20 @@ class ItemView(ViewSet):
             item.lists.add(lists_obj)
 
         serializer = CreateItemSerializer(item)
+
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
+    
     def update(self, request, pk):
-        """Handle PUT requests for a post
-
+        """Handle PUT requests for a trip
         Returns:
             Response -- Empty body with 204 status code
         """
-
         item = PacketItem.objects.get(pk=pk)
-        item.name = request.data["item_name"]
-
-        lists = PacketList.objects.get(pk=request.data["lists"])
-        item.lists = lists
-        item.save()
-
-        return Response(None, status=status.HTTP_204_NO_CONTENT)
+        serializer = CreateItemSerializer(item, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(None, status=status.HTTP_204_NO_CONTENT)    
 
     def destroy(self, request, pk):
         item = PacketItem.objects.get(pk=pk)
@@ -88,6 +107,6 @@ class CreateItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = PacketItem
         fields = ('id', 'userId', 'item_name', 'lists', 'created_on')
-        depth = 1
+        depth = 2
 
 

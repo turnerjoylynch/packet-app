@@ -12,6 +12,5 @@ You can manage all your past Items from your Items Library, such as update items
 
 Frameworks:
 
-Frontend in React/JS
-Styling in Bootstrap: https://getbootstrap.com/ 
+Frontend in React/JS: https://github.com/turnerjoylynch/packet-react
 Backend in Django/PY
