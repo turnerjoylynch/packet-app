@@ -9,6 +9,7 @@
         "authtoken",
         "corsheaders",
         "packetapi",
+        "packetuser",
         "viewsets"
     ]
 }

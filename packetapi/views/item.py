@@ -8,7 +8,6 @@ from packetapi.models.item import PacketItem
 from packetapi.models.list import PacketList
 from packetapi.models.user import PacketUser
 
-# Need to block out each method and test in Postman / rework if needed
 
 
 class ItemView(ViewSet):
@@ -61,17 +60,21 @@ class ItemView(ViewSet):
             Response -- JSON serialized idea instance
         """
         userId = PacketUser.objects.get(user=request.auth.user)
-        lists = request.data.get("lists")
-        if lists: 
-            del request.data["lists"]
-        serializer = CreateItemSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save(userId=userId)
-        item = PacketItem.objects.get(pk=serializer.data["id"])
-        if lists:
-            for id in lists:
-                lists = PacketList.objects.get(pk=id)
-                item.lists.add(lists)
+        
+        item = PacketItem.objects.create(
+            userId=userId,
+            item_name=request.data["item_name"],
+            created_on=datetime.now(),
+        )
+
+        item.save()
+
+        for lists in data['lists']:
+            lists_obj = PacketList.objects.get(list_name=lists['list_name'])
+            item.lists.add(lists_obj)
+
+        serializer = CreateItemSerializer(item)
+
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     
@@ -106,10 +109,4 @@ class CreateItemSerializer(serializers.ModelSerializer):
         fields = ('id', 'userId', 'item_name', 'lists', 'created_on')
         depth = 2
 
-# class ItemListSerializer(serializers.ModelSerializer):
-#     item = ItemSerializer(many = True,) #To represent the relationship as a string instead of id
-#     list = serializers.ListSerializer(many = True, queryset = models.PacketList.objects.all(),slug_field = 'list_name')
 
-#     class Meta:
-#         model = models.Book
-#         fields = ('name','authors','rating', 'genre')
