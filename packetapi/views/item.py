@@ -8,7 +8,6 @@ from packetapi.models.item import PacketItem
 from packetapi.models.list import PacketList
 from packetapi.models.user import PacketUser
 
-# Need to block out each method and test in Postman / rework if needed
 
 
 class ItemView(ViewSet):
@@ -39,7 +38,6 @@ class ItemView(ViewSet):
         """
         data = request.data
         userId = PacketUser.objects.get(user=request.auth.user)
-        # lists = PacketList.objects.get(pk=request.data["lists"])
 
         item = PacketItem.objects.create(
             userId=userId,
@@ -92,10 +90,4 @@ class CreateItemSerializer(serializers.ModelSerializer):
         fields = ('id', 'userId', 'item_name', 'lists', 'created_on')
         depth = 1
 
-# class ItemListSerializer(serializers.ModelSerializer):
-#     item = ItemSerializer(many = True,) #To represent the relationship as a string instead of id
-#     list = serializers.ListSerializer(many = True, queryset = models.PacketList.objects.all(),slug_field = 'list_name')
 
-#     class Meta:
-#         model = models.Book
-#         fields = ('name','authors','rating', 'genre')

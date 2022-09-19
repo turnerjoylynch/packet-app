@@ -23,46 +23,27 @@ class ListView(ViewSet):
 
         serializer = ListSerializer(list_view, many=True)
         return Response(serializer.data)
-    
-    def create(self, request):
-        """Handle POST operations
 
-        Returns
-            Response -- JSON serialized list instance
-        """
-        data = request.data
-        userId = PacketUser.objects.get(user=request.auth.user)
+
+    def create(self, request):
+        """Handles POST requests to create new List """
         items = PacketItem.objects.get(pk=request.data["items"])
-        
-        list = PacketList.objects.create(
-            userId = userId,
-            list_name = request.data["list_name"],
-            created_on = datetime.now()
-        )
-        
-        for items in data['items']:
-            items_obj = PacketItem.objects.get(item_name=items['item_name'])
-            list.items.add(items_obj)        
-        
-        serializer = CreateListSerializer(list)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-    
+        serializer = CreateListSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(items=items)
+        list = PacketList.objects.get(pk=serializer.data["id"])
+        response_serializer = ListSerializer(list)
+        return Response(response_serializer.data, status=status.HTTP_201_CREATED)
+
 
     def update(self, request, pk):
-        """Handle PUT requests for a list
-        Returns:
-            Response -- Empty body with 204 status code
-        """
         list = PacketList.objects.get(pk=pk)
-        item = PacketItem.objects.get(pk=pk)
-        list.list_name = request.data["list_name"]
-
-        
-        lists = PacketList.objects.get(pk=request.data["lists"])
-        item.lists = lists
-         
-        list.save()
+        serializer = CreateListSerializer(list, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
         return Response(None, status=status.HTTP_204_NO_CONTENT)
+
+
 
     def destroy(self, request, pk):
         list = PacketList.objects.get(pk=pk)
@@ -73,44 +54,40 @@ class ListView(ViewSet):
 ''' Actions to include the JOIN tables??
 '''
 
-@action(methods=['post'], detail=True)
-def join_list(self, request, pk):
-        """Post request to add a item to a list"""
-        list = PacketList.objects.get(pk=pk)
-        item = request.data['item']
-        list.items.add(item) 
-        return Response({'message': 'Item added'}, status=status.HTTP_201_CREATED)
+# @action(methods=['post'], detail=True)
+# def join_list(self, request, pk):
+#         """Post request to add a item to a list"""
+#         list = PacketList.objects.get(pk=pk)
+#         item = request.data['item']
+#         list.items.add(item) 
+#         return Response({'message': 'Item added'}, status=status.HTTP_201_CREATED)
     
-@action(methods=['delete'], detail=True)
-def remove(self, request, pk):
-        """Delete request of a item to be removed from a list"""
-        item = PacketItem.objects.get(pk=pk)
-        list = PacketList.objects.get(pk=pk)
-        list.items.remove(item)
-        return Response({'message': 'Item removed'}, status=status.HTTP_204_NO_CONTENT)
-    
-    # @action(methods=['get'], detail=True)
-    # def partner_alert(self, request, pk):
-    #     """ Gets user's partner pairing """
-    #     try: 
-    #         group = Group.objects.get(pk=pk)
-    #         giver = Member.objects.get(user=request.auth.user)
-    #         partner = Partner.objects.get(giver_id=giver.id, group_id=group.id)
-    #         serializer = PartnerSerializer(partner)
-    #         return Response(serializer.data)
-    #     except Partner.DoesNotExist as ex:
-    #         return Response({'message': ex.arg[0]}, status=status.HTTP_404_NOT_FOUND)
+# @action(methods=['delete'], detail=True)
+# def remove(self, request, pk):
+#         """Delete request of a item to be removed from a list"""
+#         item = PacketItem.objects.get(pk=pk)
+#         list = PacketList.objects.get(pk=pk)
+#         list.items.remove(item)
+#         return Response({'message': 'Item removed'}, status=status.HTTP_204_NO_CONTENT)
+
   
     
 ''' Actions to include the JOIN tables??
 '''
+
+class ItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PacketItem
+        fields = ('id', 'userId', 'item_name', 'created_on')
+ 
   
 class ListSerializer(serializers.ModelSerializer):
     """JSON serializer for lists """
-
+    items = ItemSerializer(many=True)
     class Meta:
         model = PacketList
-        fields = ('id', 'userId','list_name','created_on')
+        fields = ('id', 'userId','list_name','created_on', 'items')
+        
         
 class CreateListSerializer(serializers.ModelSerializer):
     """JSON serializer for lists """
