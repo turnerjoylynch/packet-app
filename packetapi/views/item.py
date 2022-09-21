@@ -9,7 +9,6 @@ from packetapi.models.list import PacketList
 from packetapi.models.user import PacketUser
 
 
-
 class ItemView(ViewSet):
     """Item view"""
 
@@ -30,37 +29,15 @@ class ItemView(ViewSet):
         serializer = ItemSerializer(item_view, many=True)
         return Response(serializer.data)
 
-    # def create(self, request):
-    #     """Handle POST operations
-
-    #     Returns
-    #         Response -- JSON serialized Item instance
-    #     """
-    #     data = request.data
-    #     userId = PacketUser.objects.get(user=request.auth.user)
-
-    #     item = PacketItem.objects.create(
-    #         userId=userId,
-    #         item_name=request.data["item_name"],
-    #         created_on=datetime.now(),
-    #     )
-
-    #     item.save()
-
-    #     for lists in data['lists']:
-    #         lists_obj = PacketList.objects.get(list_name=lists['list_name'])
-    #         item.lists.add(lists_obj)
-
-    #     serializer = CreateItemSerializer(item)
-    #     return Response(serializer.data, status=status.HTTP_201_CREATED)
-    
     def create(self, request):
-        """Handle POST operations for new idea
+        """Handle POST operations
+
         Returns
-            Response -- JSON serialized idea instance
+            Response -- JSON serialized Item instance
         """
+
         userId = PacketUser.objects.get(user=request.auth.user)
-        
+
         item = PacketItem.objects.create(
             userId=userId,
             item_name=request.data["item_name"],
@@ -68,16 +45,15 @@ class ItemView(ViewSet):
         )
 
         item.save()
-
-        for lists in data['lists']:
-            lists_obj = PacketList.objects.get(list_name=lists['list_name'])
-            item.lists.add(lists_obj)
-
         serializer = CreateItemSerializer(item)
+        new_item = PacketItem.objects.get(pk=serializer.data['id'])
+        if request.data['lists']:
+            for pk in request.data['lists']:
+                lists_obj = PacketList.objects.get(pk=pk)
+                new_item.lists.add(lists_obj)
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-    
     def update(self, request, pk):
         """Handle PUT requests for a trip
         Returns:
@@ -87,7 +63,7 @@ class ItemView(ViewSet):
         serializer = CreateItemSerializer(item, data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return Response(None, status=status.HTTP_204_NO_CONTENT)    
+        return Response(None, status=status.HTTP_204_NO_CONTENT)
 
     def destroy(self, request, pk):
         item = PacketItem.objects.get(pk=pk)
@@ -108,5 +84,3 @@ class CreateItemSerializer(serializers.ModelSerializer):
         model = PacketItem
         fields = ('id', 'userId', 'item_name', 'lists', 'created_on')
         depth = 2
-
-

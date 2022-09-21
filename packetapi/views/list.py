@@ -54,13 +54,13 @@ class ListView(ViewSet):
 ''' Actions to include the JOIN tables??
 '''
 
-# @action(methods=['post'], detail=True)
-# def join_list(self, request, pk):
-#         """Post request to add a item to a list"""
-#         list = PacketList.objects.get(pk=pk)
-#         item = request.data['item']
-#         list.items.add(item) 
-#         return Response({'message': 'Item added'}, status=status.HTTP_201_CREATED)
+@action(methods=['post'], detail=True)
+def join_list(self, request, pk):
+        """Post request to add a item to a list"""
+        list = PacketList.objects.get(pk=pk)
+        item = request.data['item']
+        list.items.add(item) 
+        return Response({'message': 'Item added'}, status=status.HTTP_201_CREATED)
     
 # @action(methods=['delete'], detail=True)
 # def remove(self, request, pk):
