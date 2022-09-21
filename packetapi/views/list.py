@@ -27,13 +27,20 @@ class ListView(ViewSet):
 
     def create(self, request):
         """Handles POST requests to create new List """
-        items = PacketItem.objects.get(pk=request.data["items"])
-        serializer = CreateListSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save(items=items)
-        list = PacketList.objects.get(pk=serializer.data["id"])
-        response_serializer = ListSerializer(list)
-        return Response(response_serializer.data, status=status.HTTP_201_CREATED)
+        userId = PacketUser.objects.get(user=request.auth.user)
+        list = PacketList.objects.create(
+            userId=userId,
+            list_name=request.data["list_name"],
+            created_on=datetime.now(), 
+        )
+        list.save()
+        serializer = CreateListSerializer(list)
+        new_list = PacketList.objects.get(pk=serializer.data['id'])
+        if request.data['items']:
+            for pk in request.data['items']:
+                items_obj = PacketItem.objects.get(pk=pk)
+                items_obj.lists.add(new_list)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
     def update(self, request, pk):
