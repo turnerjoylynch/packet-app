@@ -21,7 +21,9 @@ class ItemView(ViewSet):
 
     def list(self, request):
         """Handle GET requests to get all Items """
-        item_view = PacketItem.objects.all()
+        userId = PacketUser.objects.get(user=request.auth.user)
+        item_view = PacketItem.objects.filter(userId=userId)
+
         list = request.query_params.get('list', None)
         if list is not None:
             item = item.filter(lists=list)
